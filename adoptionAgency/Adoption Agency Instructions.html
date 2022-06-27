@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!-- saved from url=(0095)https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Adoption Agency</title>
+
+    <link rel="stylesheet" href="./Adoption Agency Instructions_files/pygments.css" type="text/css">
+    <link rel="stylesheet" href="./Adoption Agency Instructions_files/handouts-sphinx.css">
+
+    
+    <link href="./Adoption Agency Instructions_files/css" rel="stylesheet" type="text/css">
+    
+</head>
+<body>
+<div id="page-wrapper">
+    <div id="page-sidebar">
+        <header>
+            <p class="project">Springboard</p>
+
+            <p class="title">Adoption Agency</p>
+
+            <p class="backlink"><a href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html"> « Back to Homepage</a></p>
+
+        </header>
+        <div id="toc">
+            <ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#">Adoption Agency</a><ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#step-1-create-database-model">Step 1: Create Database &amp; Model</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#step-2-make-homepage-listing-pets">Step 2: Make Homepage Listing Pets</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#step-3-create-add-pet-form">Step 3: Create Add Pet Form</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#step-4-create-handler-for-add-pet-form">Step 4: Create Handler for Add Pet Form</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#step-5-add-validation">Step 5: Add Validation</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#step-6-add-display-edit-form">Step 6: Add Display/Edit Form</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#step-7-handle-edit-form">Step 7: Handle Edit Form</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#step-8-clean-up-your-code">Step 8: Clean Up Your Code!</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#further-study">Further Study</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/index.html#solution">Solution</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+    <div id="page-content">
+        
+  <div class="section" id="adoption-agency">
+<h1>Adoption Agency</h1>
+<a class="reference internal image-reference" href="./Adoption Agency Instructions_files/screen.png"><img alt="_images/screen.png" src="./Adoption Agency Instructions_files/screen.png" style="width: 50em;"></a>
+<p>In this exercise, you’ll build a web application for a Pet Adoption Agency.</p>
+<div class="section" id="step-1-create-database-model">
+<h2>Step 1: Create Database &amp; Model</h2>
+<p>Create a Flask and Flask-SQLAlchemy project, “adopt”.</p>
+<p>Create a single model, <cite>Pet</cite>. This models a pet potentially available for adoption:</p>
+<ul class="simple">
+<li><cite>id</cite>: auto-incrementing integer</li>
+<li><cite>name</cite>: text, required</li>
+<li><cite>species</cite>: text, required</li>
+<li><cite>photo_url</cite>: text, optional</li>
+<li><cite>age</cite>: integer, optional</li>
+<li><cite>notes</cite>: text, optional</li>
+<li><cite>available</cite>: true/false, required, should default to available</li>
+</ul>
+<p>While setting up the project, add the Debug Toolbar.</p>
+</div>
+<div class="section" id="step-2-make-homepage-listing-pets">
+<h2>Step 2: Make Homepage Listing Pets</h2>
+<p>The homepage (at route <code class="docutils literal notranslate"><span class="pre">/</span></code>) should list the pets:</p>
+<ul class="simple">
+<li>name</li>
+<li>show photo, if present</li>
+<li>display “Available” in bold if the pet is available for adoption</li>
+</ul>
+</div>
+<div class="section" id="step-3-create-add-pet-form">
+<h2>Step 3: Create Add Pet Form</h2>
+<p>Create a form for adding pets. This should use Flask-WTF, and should have
+the following fields:</p>
+<ul class="simple">
+<li>Pet name</li>
+<li>Species</li>
+<li>Photo URL</li>
+<li>Age</li>
+<li>Notes</li>
+</ul>
+<p>This should be at the URL path <code class="docutils literal notranslate"><span class="pre">/add</span></code>. Add a link to this from the homepage.</p>
+</div>
+<div class="section" id="step-4-create-handler-for-add-pet-form">
+<h2>Step 4: Create Handler for Add Pet Form</h2>
+<p>This should validate the form:</p>
+<ul class="simple">
+<li>if it doesn’t validate, it should re-render the form</li>
+<li>if it does validate, it should create the new pet, and redirect to
+the homepage</li>
+</ul>
+<p>This should be a POST request to the URL path <code class="docutils literal notranslate"><span class="pre">/add</span></code>.</p>
+</div>
+<div class="section" id="step-5-add-validation">
+<h2>Step 5: Add Validation</h2>
+<p>WTForms gives us lots of useful validators; we want to use these
+for validating our fields more carefully:</p>
+<ul class="simple">
+<li>the species should be either “cat”, “dog”, or “porcupine”</li>
+<li>the photo URL must be a URL <em>(but it should still be able to be optional!)</em></li>
+<li>the age should be between 0 and 30, if provided</li>
+</ul>
+</div>
+<div class="section" id="step-6-add-display-edit-form">
+<h2>Step 6: Add Display/Edit Form</h2>
+<p>Make a page that shows some information about the pet:</p>
+<ul class="simple">
+<li>Name</li>
+<li>Species</li>
+<li>Photo, if present</li>
+<li>Age, if present</li>
+</ul>
+<p>It should also show a form that allows us to edit this pet:</p>
+<ul class="simple">
+<li>Photo URL</li>
+<li>Notes</li>
+<li>Available</li>
+</ul>
+<p>This should be at the URL <code class="docutils literal notranslate"><span class="pre">/[pet-id-number]</span></code>. Make the homepage link
+to this.</p>
+</div>
+<div class="section" id="step-7-handle-edit-form">
+<h2>Step 7: Handle Edit Form</h2>
+<p>This should validate the form:</p>
+<ul class="simple">
+<li>if it doesn’t validate, it should re-render the form</li>
+<li>if it does validate, it should edit the pet</li>
+</ul>
+<p>This should be a POST request to the URL path <code class="docutils literal notranslate"><span class="pre">/[pet-id-number]</span></code>.</p>
+</div>
+<div class="section" id="step-8-clean-up-your-code">
+<h2>Step 8: Clean Up Your Code!</h2>
+<p>A critical step for any project is to refactor and clean up code; it’s
+good to do this iteratively, as you work.</p>
+<p>Check for:</p>
+<ul class="simple">
+<li>function names: good functions names are “verby”, like <cite>show_add_form</cite></li>
+<li>consistent use of good variable names</li>
+<li>every class or function should have a docstring describing its purpose</li>
+<li>add comments for any parts that would benefit from this</li>
+<li>add a file showing all of the Python requirements for this project</li>
+</ul>
+</div>
+<div class="section" id="further-study">
+<h2>Further Study</h2>
+<p>There are some optional steps, if you’d like:</p>
+<ul class="simple">
+<li>Add “message flashing” to give feedback after a pet is added/edited</li>
+<li>Divide the homepage into two listings: available pets and
+no-longer-available pets.</li>
+<li>Add Bootstrap and a simple theme.</li>
+<li>Reduce duplication: you probably have lots of duplicate form code in
+both the add form and edit form; learn about Jinja2’s “include”
+directive, and figure out how you can factor out that common code.</li>
+<li><strong>Harder</strong>: in your add-pet route, you are probably extracting
+each field’s data individually to instantiate the new pet.
+This is a little tedious and also would need to be updated if
+the add form changed. Given that there is already a dictionary
+of values from the form, can you instantiate a pet using this
+more directly?</li>
+<li><strong>Harder, Requires Research</strong>: add a new field for a photo upload
+(in addition to the URL field, before). This will need to handle file
+uploads and then save the file into the <cite>/static</cite> directory so it
+can be served up. Make it so that only one of these two fields can be
+filled out (if you try to fill out both, you should get a validation error).</li>
+</ul>
+</div>
+<div class="section" id="solution">
+<h2>Solution</h2>
+<p><a class="reference external" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-adopt/solution/index.html">Solution</a></p>
+</div>
+</div>
+
+
+
+    </div>
+</div>
+<script type="text/javascript" src="./Adoption Agency Instructions_files/jquery.js.download"></script>
+<script type="text/javascript" src="./Adoption Agency Instructions_files/underscore.js.download"></script>
+<script type="text/javascript" src="./Adoption Agency Instructions_files/doctools.js.download"></script>
+<script type="text/javascript" src="./Adoption Agency Instructions_files/language_data.js.download"></script> 
+
+</body></html>
