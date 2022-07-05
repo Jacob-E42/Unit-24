@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!-- saved from url=(0098)https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Flask Cupcakes</title>
+
+    <link rel="stylesheet" href="./Flask Cupcakes_files/pygments.css" type="text/css">
+    <link rel="stylesheet" href="./Flask Cupcakes_files/handouts-sphinx.css">
+
+    
+    <link href="./Flask Cupcakes_files/css" rel="stylesheet" type="text/css">
+    
+</head>
+<body>
+<div id="page-wrapper">
+    <div id="page-sidebar">
+        <header>
+            <p class="project">Springboard</p>
+
+            <p class="title">Flask Cupcakes</p>
+
+            <p class="backlink"><a href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html"> « Back to Homepage</a></p>
+
+        </header>
+        <div id="toc">
+            <ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#">Flask Cupcakes</a><ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#part-zero-set-up">Part Zero: Set Up</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#part-one-cupcake-model">Part One: Cupcake Model</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#part-two-listing-getting-creating-cupcakes">Part Two: Listing, Getting &amp; Creating Cupcakes</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#part-three-update-delete-cupcakes">Part Three: Update &amp; Delete Cupcakes</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#part-four-write-more-tests">Part Four: Write More Tests</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#part-five-start-on-the-frontend">Part Five: Start on the frontend</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#further-study">Further Study</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/index.html#solution">Solution</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+    <div id="page-content">
+        
+  <div class="section" id="flask-cupcakes">
+<h1>Flask Cupcakes</h1>
+<p><a class="reference external" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes.zip">Download our code</a></p>
+<a class="image-border reference internal image-reference" href="./Flask Cupcakes_files/cupcake.jpg"><img alt="_images/cupcake.jpg" class="image-border" src="./Flask Cupcakes_files/cupcake.jpg" style="width: 20em;"></a>
+<p>In this exercise, you will build a JSON API, test it using Insomnia,
+write integration tests, and build a HTML/JS frontend.</p>
+<div class="section" id="part-zero-set-up">
+<h2>Part Zero: Set Up</h2>
+<p>Make a virtual environment and install the dependencies.</p>
+<p>Make your project a Git repo.</p>
+</div>
+<div class="section" id="part-one-cupcake-model">
+<h2>Part One: Cupcake Model</h2>
+<p>Create <cite>Cupcake</cite> model in <cite>models.py</cite>.</p>
+<p>It should have the following columns:</p>
+<ul class="simple">
+<li><cite>id</cite>: a unique primary key that is an auto-incrementing integer</li>
+<li><cite>flavor</cite>: a not-nullable text column</li>
+<li><cite>size</cite>: a not-nullable text column</li>
+<li><cite>rating</cite>: a not-nullable column that is a float</li>
+<li><cite>image</cite>: a non-nullable text column. If an image is not given,
+default to <a class="reference external" href="https://tinyurl.com/demo-cupcake">https://tinyurl.com/demo-cupcake</a></li>
+</ul>
+<p>Make a database called <cite>cupcakes</cite>.</p>
+<p>Once you’ve made this, you can run our <cite>seed.py</cite> file to add a
+few sample cupcakes to your database.</p>
+</div>
+<div class="section" id="part-two-listing-getting-creating-cupcakes">
+<h2>Part Two: Listing, Getting &amp; Creating Cupcakes</h2>
+<p>Make routes for the following:</p>
+<dl class="docutils">
+<dt>GET /api/cupcakes</dt><dd><p>Get data about all cupcakes.</p>
+<p>Respond with JSON like:
+<code class="docutils literal notranslate"><span class="pre">{cupcakes:</span> <span class="pre">[{id,</span> <span class="pre">flavor,</span> <span class="pre">size,</span> <span class="pre">rating,</span> <span class="pre">image},</span> <span class="pre">...]}</span></code>.</p>
+<p>The values should come from each cupcake instance.</p>
+</dd>
+<dt>GET /api/cupcakes/<em>[cupcake-id]</em></dt><dd><p>Get data about a single cupcake.</p>
+<p>Respond with JSON like: <code class="docutils literal notranslate"><span class="pre">{cupcake:</span> <span class="pre">{id,</span> <span class="pre">flavor,</span> <span class="pre">size,</span> <span class="pre">rating,</span> <span class="pre">image}}</span></code>.</p>
+<p>This should raise a 404 if the cupcake cannot be found.</p>
+</dd>
+<dt>POST /api/cupcakes</dt><dd><p>Create a cupcake with flavor, size, rating and image data from the body
+of the request.</p>
+<p>Respond with JSON like: <code class="docutils literal notranslate"><span class="pre">{cupcake:</span> <span class="pre">{id,</span> <span class="pre">flavor,</span> <span class="pre">size,</span> <span class="pre">rating,</span> <span class="pre">image}}</span></code>.</p>
+</dd>
+</dl>
+<p>Test that these routes work in Insomnia.</p>
+<p>We’ve provided tests for these three routes; these test should pass if the
+routes work properly.</p>
+<p>You can run our tests like:</p>
+<pre class="console literal-block">(venv) $ <span class="cmd">python -m unittest -v tests</span>
+</pre>
+</div>
+<div class="section" id="part-three-update-delete-cupcakes">
+<h2>Part Three: Update &amp; Delete Cupcakes</h2>
+<p>Make routes for the following:</p>
+<dl class="docutils">
+<dt>PATCH /api/cupcakes/<em>[cupcake-id]</em></dt><dd><p>Update a cupcake with the id passed in the URL and flavor, size, rating
+and image data from the body of the request. You can always assume that
+the entire cupcake object will be passed to the backend.</p>
+<p>This should raise a 404 if the cupcake cannot be found.</p>
+<p>Respond with JSON of the newly-updated cupcake, like this:
+<code class="docutils literal notranslate"><span class="pre">{cupcake:</span> <span class="pre">{id,</span> <span class="pre">flavor,</span> <span class="pre">size,</span> <span class="pre">rating,</span> <span class="pre">image}}</span></code>.</p>
+</dd>
+<dt>DELETE /api/cupcakes/<em>[cupcake-id]</em></dt><dd><p>This should raise a 404 if the cupcake cannot be found.</p>
+<p>Delete cupcake with the id passed in the URL. Respond with JSON
+like <code class="docutils literal notranslate"><span class="pre">{message:</span> <span class="pre">"Deleted"}</span></code>.</p>
+</dd>
+</dl>
+<p>Test these routes in Insomnia.</p>
+</div>
+<div class="section" id="part-four-write-more-tests">
+<h2>Part Four: Write More Tests</h2>
+<p>Add tests for the PATCH and DELETE routes.</p>
+</div>
+<div class="section" id="part-five-start-on-the-frontend">
+<h2>Part Five: Start on the frontend</h2>
+<p>Make this route:</p>
+<dl class="docutils">
+<dt>GET /</dt><dd><p>This should return an HTML page (via <cite>render_template</cite>). This page should
+be entirely static (the route should just render the template, without
+providing any information on cupcakes in the database).
+It should show simply have an empty list where cupcakes
+should appear and a form where new cupcakes can be added.</p>
+<p>Write Javascript (using axios and jQuery) that:</p>
+<ul class="simple">
+<li>queries the API to get the cupcakes and adds to the page</li>
+<li>handles form submission to both let the API know about the new cupcake
+and updates the list on the page to show it</li>
+</ul>
+</dd>
+</dl>
+<p>(You do not need to use WTForms to make this form; this is a possibility in
+the further study.)</p>
+</div>
+<div class="section" id="further-study">
+<h2>Further Study</h2>
+<ul>
+<li><p class="first">Add tests to make sure that the GET/PATCH/DELETE routes return a 404 when
+the cupcake cannot be found.</p>
+</li>
+<li><p class="first">Add functionality for searching for cupcakes where you can type in a search
+term, submit to the backend and see a newly filtered list of cupcakes.</p>
+<p><strong>HINT:</strong> Make sure a search term is passed to the backend and that
+you are using a <cite>LIKE</cite> or <cite>ILIKE</cite> SQL query to search.</p>
+</li>
+<li><p class="first">Refactor your front-end code to be object-oriented using class methods
+to <cite>fetchAllCupcakes</cite> and <cite>createCupcakes</cite> and instance methods for
+updating and deleting cupcakes as well as searching for cupcakes.</p>
+</li>
+<li><p class="first">Refactor your HTML page to render a form created by WTForms.</p>
+</li>
+<li><p class="first">Enhance your search functionality so that you do not need to wait to submit
+to filter by flavors.</p>
+</li>
+<li><p class="first">Add functionality on the front-end to update a cupcake.</p>
+</li>
+<li><p class="first"><strong>Are you still here??</strong> Then add another table for ingredients. When you
+add or edit a cupcake, you can identify what ingredients you need for that
+cupcake. You should also have a page where you can add or edit ingredients.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="solution">
+<h2>Solution</h2>
+<p><a class="reference external" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-cupcakes/solution/index.html">View our solution</a></p>
+</div>
+</div>
+
+
+
+    </div>
+</div>
+<script type="text/javascript" src="./Flask Cupcakes_files/jquery.js.download"></script>
+<script type="text/javascript" src="./Flask Cupcakes_files/underscore.js.download"></script>
+<script type="text/javascript" src="./Flask Cupcakes_files/doctools.js.download"></script>
+<script type="text/javascript" src="./Flask Cupcakes_files/language_data.js.download"></script> 
+
+</body></html>
