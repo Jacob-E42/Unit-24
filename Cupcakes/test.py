@@ -5,7 +5,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from unittest import TestCase
 from app import app
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes_test' 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['TESTING'] = True
@@ -13,8 +13,6 @@ app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
 db.drop_all()
 db.create_all()
-
-
 
 
 CUPCAKE_DATA = {
@@ -29,6 +27,13 @@ CUPCAKE_DATA_2 = {
     "size": "TestSize2",
     "rating": 10,
     "image": "http://test.com/cupcake2.jpg"
+}
+CUPCAKE_DATA_3 = {
+
+    "flavor": "chocolate",
+    "size": "TestSize",
+    "rating": 10,
+    "image": "http://test.com/cupcake.jpg"
 }
 
 
@@ -110,3 +115,36 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_update_cupcake(self):
+        with app.test_client() as client:
+
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.patch(url, json=CUPCAKE_DATA_3)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+            self.assertEqual(data, {
+                "cupcake": {
+                    "id": self.cupcake.id,
+                    "flavor": "chocolate",
+                    "size": "TestSize",
+                    "rating": 10,
+                    "image": "http://test.com/cupcake.jpg"
+                }
+            })
+
+    def test_delete_cupcake(self):
+        with app.test_client() as client:
+
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.delete(url)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+            self.assertEqual(data, {
+                "message": "deleted"
+            }
+            )

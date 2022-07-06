@@ -1,0 +1,39 @@
+{%extends "base.html"%}
+
+{%block title%}Cupcake List
+{%endblock%}
+
+{%block content%}
+
+<h1>Cupcakes</h1>
+
+<h2>Current Cupcakes</h2>
+
+    <ul id="cupcake-list">
+
+    </ul>
+
+
+<h3>Add a New Cupcake</h3>
+<form id="cupcake-form">
+    {{ form.hidden_tag() }}
+    <!--add type=hidden form fields -->
+
+    {% for field in form
+    if field.widget.input_type != 'hidden' %}
+
+    <p>
+        {{ field.label }}
+        {{ field }}
+
+        {% for error in field.errors %}
+        {{ error }}
+        {% endfor %}
+    </p>
+
+    {% endfor %}
+
+    <button id="button" type="submit">Submit</button>
+</form>
+
+{%endblock%}
